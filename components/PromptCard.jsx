@@ -8,6 +8,7 @@ import { usePathname, useRouter } from "next/navigation";
 export default function PromptCard({ post, handleTagClick, handleEdit, handleDelete }) {
     const {data:session} = useSession()
     const pathName = usePathname()
+    const router = useRouter()
     
     const [copied, setCopied] = useState('')
     const handleCopy = () => {
@@ -18,10 +19,14 @@ export default function PromptCard({ post, handleTagClick, handleEdit, handleDel
         }, 3000);
     }
 
+    const goToProfile = () => {
+        session?.user.id===post.creator?._id ? router.push('/profile') : router.push('/profile/'+post.creator?._id)
+    }
+
   return (
       <div className="prompt_card">
           <div className="flex justify-between items-start gap-5">
-              <div className="flex-1 flex justify-start items-center gap-3 cursor-pointer">
+              <div className="flex-1 flex justify-start items-center gap-3 cursor-pointer hover:bg-gray-50 rounded-lg" onClick={goToProfile}>
                   <Image
                       src={post.creator?.image}
                       alt='user_image'
@@ -31,7 +36,7 @@ export default function PromptCard({ post, handleTagClick, handleEdit, handleDel
                   ></Image>
 
                   <div className="flex flex-col">
-                      <h3 className="font-satoshi font-semibold text-gray-900">{post.creator.first_name}</h3>
+                      <h3 className="font-satoshi font-semibold text-gray-900">{post.creator.username}</h3>
                       <p className="font-inter text-sm text-gray-500">{post.creator.email}</p>
                   </div>
               </div>
@@ -39,8 +44,8 @@ export default function PromptCard({ post, handleTagClick, handleEdit, handleDel
               <div className="cpy_btn" onClick={handleCopy}>
                   <Image
                       src={copied === post.prompt
-                          ? 'assets/icons/tick.svg'
-                          : 'assets/icons/copy.svg'
+                          ? '/assets/icons/tick.svg'
+                          : '/assets/icons/copy.svg'
                       }
                       width={12}
                       height={12}

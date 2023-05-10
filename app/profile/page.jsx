@@ -16,7 +16,7 @@ export default function MyProfile() {
           const response = await fetch(`/api/users/${session?.user.id}/posts`);
           const data = await response.json()
     
-            setPosts(data)
+            setPosts(data?.prompts)
         }
     
         if(session?.user.id ) fetchPosts()
