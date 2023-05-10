@@ -56,10 +56,11 @@ export default function PromptCard({ post, handleTagClick, handleEdit, handleDel
 
           <p className="py-4 font-satoshi text-sm text-gray-700">{post.prompt}</p>
           <p
-              className="font-inter text-sm blue_gradient cursor-pointer"
-              onClick={()=>handleTagClick && handleTagClick(post.tag)}
+              className="font-inter text-sm blue_gradient"
           >
-              #{post.tag}
+              <span className="cursor-pointer hover:underline" onClick={() => handleTagClick && handleTagClick(post.tag)}>
+                  #{post.tag}
+              </span>
           </p>
 
 
